@@ -329,7 +329,8 @@
 					url: '/home/' + id + '/add-to-cart/',
 					dataType: "json",
 					success: function (response) {
-						swal("Thêm vào giỏ hàng thành công");
+						//swal("Thêm vào giỏ hàng thành công");
+						console.log(response);
 					}
 				});
 			};
