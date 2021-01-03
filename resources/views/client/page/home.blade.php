@@ -1,4 +1,4 @@
-@extends('client.layout.web');
+@extends('client.layout.web')
 
 @section('content')
     
@@ -9,8 +9,6 @@
 				<!-- row -->
 				<div class="row">
 					@foreach ($collections as $collection)
-						
-					
 					<!-- shop -->
 						<div class="col-md-4 col-xs-6">
 							<div class="shop">
@@ -39,17 +37,19 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-
+					@php
+					$routeName = \Request::route()->getName()
+				  	@endphp
 					<!-- section title -->
 					<div class="col-md-12">
 						<div class="section-title">
 							<h3 class="title">Sản phẩm mới </h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-									<li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-									<li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-									<li><a data-toggle="tab" href="#tab1">Accessories</a></li>
+									<li class="{{($routeName == 'client.index')?'active':''}}"><a href="{{route('client.index')}}">Tất cả sản phẩm</a></li>
+									@foreach ($categories as $category)
+									<li class="{{($category->id == $category_id)?'active':''}}"><a   href="{{route('index.category',$category->id)}}"> {{ $category->name }} </a></li>
+									@endforeach
 								</ul>
 							</div>
 						</div>
@@ -76,8 +76,8 @@
 									</div>
 									<div class="product-body">
 										<p class="product-category"> {{ $item->category->name}} </p>
-										<h3 class="product-name"><a href="#"> {{ $item->name}} </a></h3>
-										<h4 class="product-price"> {{ $item->price}} </h4>
+										<h3 class="product-name"><a href="{{ route('detail.layout',$item->id)}}"> {{ $item->name}} </a></h3>
+										<h4 class="product-price"> {{ number_format($item->price) }} </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -92,7 +92,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn" data-id=" {{$item->id}} "><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" data-id="{{$item->id}}"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>		
 			<!-- /product -->                        
@@ -171,10 +171,10 @@
 							<h3 class="title">Top selling</h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
-									<li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
-									<li><a data-toggle="tab" href="#tab2">Cameras</a></li>
-									<li><a data-toggle="tab" href="#tab2">Accessories</a></li>
+									<li class="active"><a data-toggle="tab" href="#tab2">Tất cả sản phẩm</a></li>
+									@foreach ($categories as $category)
+									<li><a data-toggle="tab" href="#tab1"> {{ $category->name }} </a></li>
+									@endforeach
 								</ul>
 							</div>
 						</div>

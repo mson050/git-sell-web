@@ -502,11 +502,11 @@ textarea.input {
   display: inline-block;
 }
 
-.header-ctn>div+div {
+.header-ctn>div>div+div {
   margin-left: 15px;
 }
 
-.header-ctn>div>a {
+.header-ctn>div>div>a {
   display: block;
   position: relative;
   width: 90px;
@@ -514,16 +514,16 @@ textarea.input {
   color: #FFF;
 }
 
-.header-ctn>div>a>i {
+.header-ctn>div>div>a>i {
   display: block;
   font-size: 18px;
 }
 
-.header-ctn>div>a>span {
+.header-ctn>div>div>a>span {
   font-size: 12px;
 }
 
-.header-ctn>div>a>.qty {
+.header-ctn>div>div>a>.qty {
   position: absolute;
   right: 15px;
   top: -10px;

@@ -52,7 +52,11 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> VNĐ </a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> Tài khoản </a></li>
+						@if(!Auth::check())
+						<li><a href=" {{ route("auth.login")}} "><i class="fa fa-user-o"></i> Đăng nhập </a></li>
+						@else
+						<li><a href=""><i class="fa fa-user-o"></i> {{Auth::user()->fullname}} </a></li>
+						@endif
 					</ul>
 				</div>
 			</div>
@@ -77,14 +81,14 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
 							<div class="header-search">
-								<form>
+								<form method="GET" action="">
 									<select class="input-select">
 										<option value="0">Tất cả</option>
 										<option value="1">Category 01</option>
 										<option value="1">Category 02</option>
 									</select>
-									<input class="input" placeholder="Search here">
-									<button class="search-btn">Tìm kiếm</button>
+									<input class="input" type="text" name="keyword" value="{{ request()->input('keyword') }}" placeholder="Search here">
+									<button type="submit" class="search-btn">Tìm kiếm</button>
 								</form>
 							</div>
 						</div>
@@ -95,42 +99,55 @@
 							<div class="header-ctn">
 								<!-- Wishlist -->
 								<div>
-									<a href="#">
-										<i class="fa fa-heart-o"></i>
-										<span>Yêu thích</span>
-										<div class="qty">2</div>
-									</a>
+									<div>
+										<a href="#">
+											<i class="fa fa-heart-o"></i>
+											<span>Yêu thích</span>
+											<div class="qty">2</div>
+										</a>
+									</div>
 								</div>
+							
 								<!-- /Wishlist -->
 
 								<!-- Cart -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Giỏ hàng</span>
-										<div class="qty">3</div>
-									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="/store/img/product01.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+								<div id="change-items-cart">
+									@php
+										$cart = session()->get('cart');
+										$cartInfo = session()->get('cartInfo');
+									@endphp
+									<div class="dropdown">
+										<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+											<i class="fa fa-shopping-cart"></i>
+											<span>Giỏ hàng</span>
+											<div class="qty">{{isset($cartInfo) ? $cartInfo['totalQty'] : 0}}</div>
+										</a>
+										<div class="cart-dropdown">
+											<div class="cart-list">
+												@if (isset($cart))
+														@foreach ($cart as $item)
+														<div class="product-widget">
+															<div class="product-img">
+																<img src="/store/img/product01.png" alt="">
+															</div>
+															<div class="product-body">
+																<h3 class="product-name"><a href="#"> {{$item['name']}} </a></h3>
+																<h4 class="product-price"><span class="qty"> {{$item['qty']}} X </span>{{ number_format($item['price']) }} </h4>
+															</div>
+															<button class="delete" data-id="{{$item['id']}}"><i class="fa fa-close"></i> </button>
+														</div>
+														
+														@endforeach
+												@endif
 											</div>
-
-										</div>
-										<div class="cart-summary">
-											<small class="total-items">3 Item(s) selected</small>
-											<h5 class="total-price" >SUBTOTAL: $2940.00</h5>
-										</div>
-										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href=" {{ route('checkout.layout')}} ">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<div class="cart-summary">
+												<small class="total-items">  {{isset($cartInfo) ? $cartInfo['totalQty'] : "0"}} selected</small>
+												<h5 class="total-price">SUBTOTAL: {{isset($cartInfo) ? number_format($cartInfo['totalPrice']):'0'}} VND</h5>
+											</div>
+											<div class="cart-btns">
+												<a href="#">View Cart</a>
+												<a href=" {{ route('checkout.layout')}} ">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -245,7 +262,7 @@
 									<li><a href="#"> {{ $category->name }} </a></li>
                   @endforeach
                 </ul>
-                {{ $categories->appends($_GET) }}
+            
 							</div>
 						</div>
 
@@ -312,6 +329,7 @@
 		</footer>
 		<!-- /FOOTER -->
 
+
 		<!-- jQuery Plugins -->
 		<script src="/store/js/jquery.min.js"></script>
 		<script src="/store/js/bootstrap.min.js"></script>
@@ -323,25 +341,66 @@
 		<script type="text/javascript">
 			function addToCart(){
 				let id = $(this).data('id');
-				
+				@if(Auth::user())
 				$.ajax({
 					type: "GET",
 					url: '/home/' + id + '/add-to-cart/',
-					dataType: "json",
 					success: function (response) {
-						//swal("Thêm vào giỏ hàng thành công");
-						console.log(response);
+						// console.log(response);
+						$("#change-items-cart").empty();
+						$("#change-items-cart").html(response);
+						swal("Thêm vào giỏ hàng thành công");
 					}
 				});
+				@else 
+						swal("Đăng nhập để thêm vào giỏ hàng của bạn");
+				@endif
 			};
+			function deleteItemCart() {
+				let id = $(this).data('id');
+				$.ajax({
+					type: "DELETE",
+					url: '/home/' + id + '/add-to-cart/',
+					success: function (response) {
+						$("#change-items-cart").empty();
+						$("#change-items-cart").html(response);
+						swal("Đã xóa sản phẩm từ giỏ hàng thành công");
+					}
+				});
+			}
 			$(document).ready(function(){
 				$('.add-to-cart-btn').on('click',addToCart);
+				$('.delete').on('click',deleteItemCart);
 			});
+			$(document).on( "click", ".delete", function() {
+				let id = $(this).data('id');
+				$.ajax({
+					type: "DELETE",
+					url: '/home/' + id + '/add-to-cart/',
+					success: function (response) {
+						$("#change-items-cart").empty();
+						$("#change-items-cart").html(response);
+						swal("Đã xóa sản phẩm từ giỏ hàng thành công");
+					}
+				});
+			});
+			//$('.delete').on('click',deleteItemCart);
+				
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
-			});
+			})
+			@if (Session('success'))
+			$(document).ready(function(){
+				swal('Đặt hàng thành công')
+			})
+            @endif
+			@if (Session('errors'))
+				$(document).ready(function(){
+				swal("Không có sản phẩm để thanh toán")
+			})
+			@endif
 		</script>
 	</body>
 </html>

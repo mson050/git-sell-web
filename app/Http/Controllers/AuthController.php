@@ -49,7 +49,7 @@ class AuthController extends Controller
             'email' => $username
         ]))
         {
-            if($user->role == 1){
+            if(Auth::user()->role == 1){
                 return redirect()
                 ->route('items.index');
             } else {

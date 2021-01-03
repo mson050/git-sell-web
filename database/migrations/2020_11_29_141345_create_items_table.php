@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->string('detail')->nullable();
             $table->integer('quantity')->default(1);
-            $table->string('price')->nullable();
+            $table->integer('price')->nullable();
             $table->string('color')->nullable();
             $table->Integer('category_id')->nullable();
             $table->Integer('invoice_id')->nullable();

@@ -25,14 +25,18 @@ Route::post('login','AuthController@loginSubmit')->name('auth.login-submit');
 
 //Route client
 Route::get('/home','ClientController@index')->name('client.index');
-Route::get('/home/categories','ClientController@categoriesLayout')->name('home.categories');
+Route::get('/home/{id}','ClientController@indexCategory')->name('index.category');
+Route::get('/home/categories/','ClientController@categoriesLayout')->name('home.categories');
 Route::get('/home/checkout','ClientController@checkoutLayout')->name('checkout.layout');
 Route::get('/home/hotdeals','ClientController@hotdealsLayout')->name('hotdeals.layout');
 Route::get('/home/detail/{id}','ClientController@detail')->name('detail.layout');
 
 Route::get('/home/{id}/add-to-cart/','ClientController@addtocart')->name('add-to-cart');
+Route::delete('/home/{id}/add-to-cart/','ClientController@deleteItemCart')->name('delete_item-cart');
 
-
+//Route pay
+Route::post('home/invoice/store','InvoiceController@store')->name('invoice.store');
+Route::get('home/detailOder/{id}','DetailOderController@storeDetailOder')->name('detailOder.store');
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -43,6 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/items/{id}/edit', 'ItemController@edit')->name('items.edit');
     Route::put('/items/{id}', 'ItemController@update')->name('items.update');
     Route::delete('/items/{id}', 'ItemController@destroy')->name('items.destroy');
+
+    //Route invoice
+    Route::get('/invoice','InvoiceController@index')->name('invoices.index');
 
     //Route categories
     Route::get('/categories','CategoryController@index')->name('categories.index');

@@ -1,31 +1,91 @@
 @extends('layout.admin')
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h1>Danh sách loại sản phẩm</h1>
-                </div>
-
-                    <table style="margin-top: 20px" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th><h5>ID</h5> </th>
-                                <th><h5>Tên loại sản phẩm</h5></th>
-                                <th><h5>Action</h5></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                         
-                        </tbody>
+    @foreach ($invoices as $invoice)
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="3">
+                    <table>
+                        <tr>
+                            <td class="title" style="background: ">
+                                <img style="background: black" src="./store/img/logo.png" style="width:100%; max-width:300px;">
+                            </td>
+                            
+                            <td>
+                                Hóa đơn #: {{$invoice->id}}<br>
+                                Ngày: {{ date_format($invoice->created_at,'Y/m/d') }} <br>
+                            </td>
+                        </tr>
                     </table>
+                </td>
 
-                    {{ $invoices->appends($_GET) }}
-                </div>
-            </div>
-        </div>
+            </tr>
+            
+            <tr class="information">
+                <td >
+                    <table>
+                        <tr>
+                            <td>
+                                Khách hàng<br>
+                                Email khách hàng<br>
+                                Địa chỉ nhận<br>
+                                Số điện thoại
+                            </td>
+                            <td></td>
+                            <td>
+                                {{ $invoice->customer_name }} <br>
+                                {{ $invoice->email }} <br>
+                                {{ $invoice->address_shipping}}, {{ $invoice->city}} <br>
+                                {{ $invoice->customer_phone }}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            
+            <tr class="heading">
+                <td>
+                    Sản phẩm
+                </td>
+                
+                <td>
+                    Số lượng
+                </td>
+
+                <td>
+                    Giá
+                </td>
+            </tr>
+            @foreach ($invoice->item as $item)
+                <tr class="item">
+                    <td>
+                        {{ $item->name}}
+                    </td>
+                    
+                    <td>
+                        {{ $item->pivot->item_quantity}}
+                    </td>   
+                    <td>
+                        {{ number_format($item->price)}} VND
+                    </td>
+                </tr>
+            @endforeach
+        
+            
+            
+            <tr class="total">
+                <td></td>
+                <td>
+                    Tổng tiền: {{ number_format($invoice->totalPrice ) }} VND 
+                </td>
+                <td>
+                   
+                </td>
+            </tr>
+        </table>
     </div>
-</div>
+    @endforeach
+    {{ $invoices->appends($_GET) }}
 
 @endsection
