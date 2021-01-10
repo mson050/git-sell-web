@@ -103,7 +103,7 @@
 								<!-- Wishlist -->
 								<div>
 									<div>
-										<a href="{{route('order.layout',Auth::user()->id)}}">
+										<a href="{{Auth::check()?route('order.layout',Auth::user()->id):"#"}}">
 											<i class="fa fa-id-card-o"></i>
 											<span>Đơn hàng</span>
 										</a>
@@ -261,7 +261,7 @@
 								<h3 class="footer-title">Categories</h3>
 								<ul class="footer-links">
                   @foreach ($categories as $category)            
-									<li><a href="#"> {{ $category->name }} </a></li>
+									<li><a href="{{ route('home.categories')}}"> {{ $category->name }} </a></li>
                   @endforeach
                 </ul>
             

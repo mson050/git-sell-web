@@ -74,7 +74,7 @@
 										</div>
 									</div>
 									<div class="product-body">
-										<p class="product-category"> {{ $item->category->name}} </p>
+										<p class="product-category"> {{isset($item->category->name) ? $item->category->name:''  }} </p>
 										<h3 class="product-name"><a href="{{ route('detail.layout',$item->id)}}"> {{ $item->name}} </a></h3>
 										<h4 class="product-price"> {{ number_format($item->price) }} </h4>
 										<div class="product-rating">
@@ -199,7 +199,7 @@
 												</div>
 											</div>
 											<div class="product-body">
-												<p class="product-category"> {{$item->category->name}} </p>
+												<p class="product-category"> {{isset($item->category->name) ? $item->category->name:''  }} </p>
 												<h3 class="product-name"><a href=" {{ route('detail.layout',$item->id)}} "> {{ $item->name}} </a></h3>
 												<h4 class="product-price">{{ $item->price}} </h4>
 												<div class="product-rating">
@@ -261,7 +261,7 @@
 										<img src="/uploads/images/{{ $item->image}}" alt="">
 									</div>
 									<div class="product-body">
-										<p class="product-category">{{$item->category->name}}</p>
+										<p class="product-category">{{isset($item->category->name) ? $item->category->name:''  }}</p>
 										<h3 class="product-name"><a href="{{ route('detail.layout',$item->id)}}">{{$item->name}}</a></h3>
 										<h4 class="product-price">{{$item->price}}</del></h4>
 									</div>
