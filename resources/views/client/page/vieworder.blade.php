@@ -9,7 +9,7 @@
                 <table>
                     <tr>
                         <td class="title" style="background: ">
-                            <img style="background: black" src="./store/img/logo.png" style="width:100%; max-width:300px;">
+                            <img style="background: black" src="../../store/img/logo.png" style="width:100%; max-width:300px;">
                         </td>
                         
                         <td>
