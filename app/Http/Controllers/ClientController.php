@@ -27,8 +27,9 @@ class ClientController extends Controller
         $categories = $category_query->get();
         $items = $item_query->get();
         $collections = $collection_query->get();
-
-        return view('client.page.home', compact('categories','items','collections','category_id'));
+        $topSells_querry = Item::orderBy('number','desc')->where('number','>=','3');
+        $topSells = $topSells_querry->get();
+        return view('client.page.home', compact('categories','items','collections','category_id','topSells'));
     }
     public function indexCategory($category_id,Request $request)
     {
@@ -45,8 +46,8 @@ class ClientController extends Controller
         $categories = $category_query->get();
         $items = $item_query->get();
         $collections = $collection_query->get();
-
-        return view('client.page.home', compact('categories','items','collections','category_id'));
+        $topSells = Item::orderBy('number','asc')->where('number','>=','3');
+        return view('client.page.home', compact('categories','items','collections','category_id','topSells'));
     }
 
     public function categoriesLayout(Request $request)
@@ -82,15 +83,13 @@ class ClientController extends Controller
     {
         $category_query = Category::query();
         $categories = $category_query->paginate(5);
-        $item_query = Item::find($id);
-        $item = $item_query->first();
+        $item = Item::find($id);
         $related_items = Item::query()->where('category_id','=',"{$item->category_id}")->get();
         return view('client.page.detail',compact('item','categories','related_items'));
 
     }
     public function addtocart($id, Request $request)
     {
-        
         $item = Item::find($id);
         $totalQty = 0;
         $totalPrice = 0;
@@ -104,6 +103,7 @@ class ClientController extends Controller
                 'id' => $item->id,
                 'name' => $item->name,
                 'price' => $item->price,
+                'image' => $item->image,
                 'qty' => 1
             ];
         }
@@ -130,5 +130,39 @@ class ClientController extends Controller
         $request->session()->put('cartInfo',$cartInfo);
         return view('client.layout.cart', compact('cart','cartInfo'));
     }
+   public function viewCart()
+   {
+        $category_query = Category::query();
+        $categories = $category_query->paginate(5);
 
+        $cart = session()->get('cart');
+        $cartInfo = session()->get('cartInfo');
+       return view('client.page.viewcart', compact('categories','cart','cartInfo'));
+   }
+   public function updateCart($id,Request $request)
+   {
+    $category_query = Category::query();
+    $categories = $category_query->paginate(5);
+    $cart = session()->get('cart');
+    $cartInfo = session()->get('cartInfo');
+
+    $cartInfo['totalQty'] = $cartInfo['totalQty'] + ($request->input('cart_quantity')-$cart[$id]['qty']);
+    $cartInfo['totalPrice'] = $cartInfo['totalPrice'] + ($request->input('cart_quantity')-$cart[$id]['qty'])*$cart[$id]['price'];
+    $cart[$id]['qty'] = $request->input('cart_quantity');
+    $request->session()->put('cart',$cart);
+    $request->session()->put('cartInfo',$cartInfo);
+    return view('client.page.viewcart', compact('categories','cart','cartInfo'));
+
+   }
+   public function viewOrder($id)
+   {
+        $category_query = Category::query();
+        $categories = $category_query->paginate(5);   
+
+        $order_query = Invoice::orderBy('id','desc')->where('user_id','=',"{$id}");
+        $orders = $order_query->paginate(3);
+        
+        return view('client.page.vieworder', compact('categories','orders'));
+   }
+    
 }

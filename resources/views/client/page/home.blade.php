@@ -38,7 +38,7 @@
 				<!-- row -->
 				<div class="row">
 					@php
-					$routeName = \Request::route()->getName()
+					$routeName = Request::route()->getName();
 				  	@endphp
 					<!-- section title -->
 					<div class="col-md-12">
@@ -70,8 +70,7 @@
 									<div class="product-img">
 										<img src="/uploads/images/{{ $item->image }}" alt="">
 										<div class="product-label">
-											<span class="sale">-30%</span>
-											<span class="new">NEW</span>
+											<span class="new">{{($item->quantity==0)? 'Hết hàng':'Còn hàng'}}</span>
 										</div>
 									</div>
 									<div class="product-body">
@@ -168,7 +167,7 @@
 					<!-- section title -->
 					<div class="col-md-12">
 						<div class="section-title">
-							<h3 class="title">Top selling</h3>
+							<h3 class="title">Bán chạy</h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
 									<li class="active"><a data-toggle="tab" href="#tab2">Tất cả sản phẩm</a></li>
@@ -190,14 +189,13 @@
 									<div class="products-slick" data-nav="#slick-nav-2">
 
 
-                    @foreach ($items as $item)
+                    @foreach ($topSells as $item)
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
 												<img src="/uploads/images/{{ $item->image}}" alt="">
 												<div class="product-label">
-													<span class="sale">-30%</span>
-													<span class="new">NEW</span>
+													<span class="new">{{($item->quantity==0)? 'Hết hàng':'Còn hàng'}}</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -247,7 +245,7 @@
 				<div class="row">
 					<div class="col-md-4 col-xs-6">
 						<div class="section-title">
-							<h4 class="title">Top selling</h4>
+							<h4 class="title">Bán chạy</h4>
 							<div class="section-nav">
 								<div id="slick-nav-3" class="products-slick-nav"></div>
 							</div>
@@ -255,85 +253,21 @@
 
 						<div class="products-widget-slick" data-nav="#slick-nav-3">
 							<div>
+								@foreach ($topSells as $item)
+									
 								<!-- product widget -->
 								<div class="product-widget">
 									<div class="product-img">
-										<img src="./store/img/product07.png" alt="">
+										<img src="/uploads/images/{{ $item->image}}" alt="">
 									</div>
 									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="./store/img/product08.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="./store/img/product09.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+										<p class="product-category">{{$item->category->name}}</p>
+										<h3 class="product-name"><a href="{{ route('detail.layout',$item->id)}}">{{$item->name}}</a></h3>
+										<h4 class="product-price">{{$item->price}}</del></h4>
 									</div>
 								</div>
 								<!-- product widget -->
-							</div>
-
-							<div>
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="./store/img/product01.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="./store/img/product02.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="./store/img/product03.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- product widget -->
+								@endforeach
 							</div>
 						</div>
 					</div>

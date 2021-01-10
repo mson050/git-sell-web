@@ -51,7 +51,7 @@
                         </tbody>
                     </table>
 
-                    {{ $collections->appends($_GET) }}
+                     {{ $collections->appends($_GET) }}
                 </div>
             </div>
         </div>

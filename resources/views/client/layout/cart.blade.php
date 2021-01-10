@@ -10,7 +10,7 @@
             @foreach ($cart as $item)
             <div class="product-widget">
                 <div class="product-img">
-                    <img src="/store/img/product01.png" alt="">
+                    <img src="/uploads/images/{{ $item['image'] }}" alt="">
                 </div>
                 <div class="product-body">
                     <h3 class="product-name"><a href="#"> {{$item['name']}} </a></h3>
@@ -25,7 +25,7 @@
             <h5 class="total-price">SUBTOTAL: {{number_format($cartInfo['totalPrice'])}} VND</h5>
         </div>
         <div class="cart-btns">
-            <a href="#">View Cart</a>
+            <a href="{{ route('viewcart.layout')}}">View Cart</a>
             <a href=" {{ route('checkout.layout')}} ">Checkout <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>

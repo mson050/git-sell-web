@@ -25,11 +25,14 @@ Route::post('login','AuthController@loginSubmit')->name('auth.login-submit');
 
 //Route client
 Route::get('/home','ClientController@index')->name('client.index');
-Route::get('/home/{id}','ClientController@indexCategory')->name('index.category');
 Route::get('/home/categories/','ClientController@categoriesLayout')->name('home.categories');
 Route::get('/home/checkout','ClientController@checkoutLayout')->name('checkout.layout');
 Route::get('/home/hotdeals','ClientController@hotdealsLayout')->name('hotdeals.layout');
 Route::get('/home/detail/{id}','ClientController@detail')->name('detail.layout');
+Route::get('/home/viewcart','ClientController@viewCart')->name('viewcart.layout');
+Route::post('/home/viewcart/update/{id}','ClientController@updateCart')->name('viewcart.update');
+Route::get('/home/order/{id}','ClientController@viewOrder')->name('order.layout');
+Route::get('/home/{id}','ClientController@indexCategory')->name('index.category');
 
 Route::get('/home/{id}/add-to-cart/','ClientController@addtocart')->name('add-to-cart');
 Route::delete('/home/{id}/add-to-cart/','ClientController@deleteItemCart')->name('delete_item-cart');

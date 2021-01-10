@@ -12,6 +12,9 @@
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
+		{{-- invoice --}}
+		<link rel="stylesheet" href="/invoice/style.css">
+		
 		<!-- Bootstrap -->
 		<link type="text/css" rel="stylesheet" href="/store/css/bootstrap.min.css"/>
 
@@ -51,9 +54,9 @@
 						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> VNĐ </a></li>
 						@if(!Auth::check())
-						<li><a href=" {{ route("auth.login")}} "><i class="fa fa-user-o"></i> Đăng nhập </a></li>
+						<li><a href=" {{ route("auth.login")}} "><i class="fa fa-sign-in"></i> Đăng nhập </a></li>
+						<li><a href=" {{ route("auth.register")}} "><i class="fa fa-user-o"></i> Đăng ký </a></li>
 						@else
 						<li><a href=""><i class="fa fa-user-o"></i> {{Auth::user()->fullname}} </a></li>
 						@endif
@@ -100,10 +103,9 @@
 								<!-- Wishlist -->
 								<div>
 									<div>
-										<a href="#">
-											<i class="fa fa-heart-o"></i>
-											<span>Yêu thích</span>
-											<div class="qty">2</div>
+										<a href="{{route('order.layout',Auth::user()->id)}}">
+											<i class="fa fa-id-card-o"></i>
+											<span>Đơn hàng</span>
 										</a>
 									</div>
 								</div>
@@ -128,7 +130,7 @@
 														@foreach ($cart as $item)
 														<div class="product-widget">
 															<div class="product-img">
-																<img src="/store/img/product01.png" alt="">
+																<img src="/uploads/images/{{ $item['image'] }}" alt="">
 															</div>
 															<div class="product-body">
 																<h3 class="product-name"><a href="#"> {{$item['name']}} </a></h3>
@@ -145,7 +147,7 @@
 												<h5 class="total-price">SUBTOTAL: {{isset($cartInfo) ? number_format($cartInfo['totalPrice']):'0'}} VND</h5>
 											</div>
 											<div class="cart-btns">
-												<a href="#">View Cart</a>
+												<a href="{{ route('viewcart.layout')}}">View Cart</a>
 												<a href=" {{ route('checkout.layout')}} ">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 											</div>
 										</div>
@@ -185,7 +187,7 @@
                     @endphp
 					<ul class="main-nav nav navbar-nav">
 						<li class=" {{ $routeName == 'client.index' ? 'active' : ''  }}"><a href=" {{route('client.index')}} ">Trang chủ</a></li>
-						<li class=" {{ $routeName == 'hotdeals.layout' ? 'active' : ''  }}"><a href=" {{route('hotdeals.layout')}} ">Bán chạy</a></li>
+						{{-- <li class=" {{ $routeName == 'hotdeals.layout' ? 'active' : ''  }}"><a href=" {{route('hotdeals.layout')}} ">Bán chạy</a></li> --}}
 						<li class=" {{ $routeName == 'home.categories' ? 'active' : ''  }}"><a href=" {{ route('home.categories') }} ">Danh mục phụ kiện</a></li>
 					</ul>
 					<!-- /NAV -->

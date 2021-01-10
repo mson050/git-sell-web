@@ -2,8 +2,6 @@
 
 @section('content')
     
-
-
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->

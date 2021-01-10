@@ -14,7 +14,7 @@ class AlterTableItemsAddNumber extends Migration
     public function up()
     {
         Schema::table('items', function ($table) {
-            $table->Integer('number')->default('1');
+            $table->Integer('number')->default('0');
         });
     }
 

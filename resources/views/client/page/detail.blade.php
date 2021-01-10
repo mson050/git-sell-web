@@ -89,12 +89,12 @@
 								<div class="qty-label">
 									Số lượng
 									<div class="input-number">
-										<input type="number" name="qty" value="1">
+										<input id="qty_number-{{$item->id}}" type="number" name="qty" value="1">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn" data-id=" {{$item->id}} "><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng </button>
+								<button class="add-to-cart-btn" data-id="{{$item->id}}"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng </button>
 							</div>
 
 							<ul class="product-btns">

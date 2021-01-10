@@ -19,7 +19,7 @@
 								<div class="checkbox-filter">
 									@foreach ($categories as $category)	
 										<div class="input-checkbox">
-									<input type="checkbox" name='category-id[{{$category->id}}]' {{in_array($category->id,$category_requests) ? 'checked':''}} value="{{$category->id}}" id="{{$category->id}}">
+									<input type="checkbox" name='category-id[{{$category->id}}]'  value="{{$category->id}}" id="{{$category->id}}">
 											<label for="{{$category->id}}">
 												<span></span>
 												{{ $category->name }}
