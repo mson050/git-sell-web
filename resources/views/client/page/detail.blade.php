@@ -127,7 +127,7 @@
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#tab1"> Mô tả</a></li>
 								<li><a data-toggle="tab" href="#tab2"> Chi tiết</a></li>
-								{{-- <li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li> --}}
+								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
 							</ul>
 							<!-- /product tab nav -->
 
@@ -154,7 +154,7 @@
 								<!-- /tab2  -->
 
 								<!-- tab3  -->
-								{{-- <div id="tab3" class="tab-pane fade in">
+								<div id="tab3" class="tab-pane fade in">
 									<div class="row">
 										<!-- Rating -->
 										<div class="col-md-3">
@@ -327,7 +327,7 @@
 										</div>
 										<!-- /Review Form -->
 									</div>
-								</div> --}}
+								</div>
 								<!-- /tab3  -->
 							</div>
 							<!-- /product tab content  -->

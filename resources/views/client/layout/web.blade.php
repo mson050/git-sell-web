@@ -59,6 +59,7 @@
 						<li><a href=" {{ route("auth.register")}} "><i class="fa fa-user-o"></i> Đăng ký </a></li>
 						@else
 						<li><a href=""><i class="fa fa-user-o"></i> {{Auth::user()->fullname}} </a></li>
+						<li><a href="{{ route("auth.logout")}}"><i class="fa fa-user-o"></i> Đăng xuất </a></li>
 						@endif
 					</ul>
 				</div>
