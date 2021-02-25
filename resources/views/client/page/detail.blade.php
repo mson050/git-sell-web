@@ -242,8 +242,11 @@
 
 										<!-- Reviews -->
 										<div class="col-md-6">
+											<form>
+											@csrf
 											<div id="reviews">
 												<ul class="reviews">
+													<input type="hidden" name="comment_item_id" class="comment_item_id" value="{{$item->id}}">
 													<li>
 														<div class="review-heading">
 															<h5 class="name">John</h5>
@@ -300,17 +303,29 @@
 													<li><a href="#">4</a></li>
 													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
 												</ul>
+											
+											
+
+											
+											
+											
+											
+											
+											
 											</div>
+											</form>
 										</div>
 										<!-- /Reviews -->
-
+									
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
+												<form action="#" class="review-form">
+													@csrf
+													<input  type="hidden" class="user_comment_id" name="user" value="{{Auth::user()->id}}" placeholder="">
+													<input  type="hidden" class="item_comment_id" name="item" value="{{$item->id}}" placeholder="">
+													{{-- <input class="input" type="email" placeholder="Your Email"> --}}
+													<textarea class="input comment-content" name="review" placeholder="Your Review"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
@@ -321,7 +336,7 @@
 															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
 														</div>
 													</div>
-													<button class="primary-btn">Submit</button>
+													<button type="button" class="primary-btn sent-comment">Bình luận</button>
 												</form>
 											</div>
 										</div>

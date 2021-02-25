@@ -341,6 +341,43 @@
 		<script src="/store/js/jquery.zoom.min.js"></script>
 		<script src="/store/js/main.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var item_id = $('.comment_item_id').val();
+				var _token = $('input[name="_token"]').val();
+
+				loadcomment();
+				function loadcomment() {
+					$.ajax({
+						type: "POST",
+						url: '/home/detail/load-comment',
+						data:{item_id:item_id,_token:_token},
+						success: function (response) {
+						$("#reviews").empty();
+						$("#reviews").html(response);
+						}
+					});
+				}
+				//comment ajax
+			$('.sent-comment').click(function () {
+				var item_id = $('.item_comment_id').val();
+				var user_id = $('.user_comment_id').val();
+				var comment_content = $('.comment-content').val();
+				var _token = $('input[name="_token"]').val();
+				$.ajax({
+					type: "POST",
+					url: "/home/detail/add-comment",
+					data: {item_id:item_id,user_id:user_id,comment_content:comment_content,_token:_token},
+					success: function (response) {
+						swal('Comment thành công');
+						loadcomment();
+					}
+				});
+			});
+			})
+		</script>
+
 		<script type="text/javascript">
 			function addToCart(){
 				let id = $(this).data('id');
@@ -388,7 +425,9 @@
 				});
 			});
 			//$('.delete').on('click',deleteItemCart);
-				
+
+			
+
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

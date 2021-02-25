@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Item;
 use App\Models\Collection;
 use App\Models\Invoice;
+use App\Models\Comment;
 use Auth;
 
 class ClientController extends Controller
@@ -164,5 +165,22 @@ class ClientController extends Controller
         
         return view('client.page.vieworder', compact('categories','orders'));
    }
-    
+   public function addcomment(Request $request)
+   {
+        $user = $request->input('user_id');
+        $item = $request->input('item_id');
+        $review = $request->input('comment_content');
+
+        $comment = new Comment;
+        $comment->user_id = $user;
+        $comment->item_id = $item;
+        $comment->comment = $review;
+        $comment->save();
+
+   }
+   public function loadcomment(Request $request){
+        $item_id = $request->item_id;
+        $comments = Comment::query()->orderBy('id','desc')->where('item_id','=',"{$item_id}")->get();
+        return view('client.layout.review',compact('comments'));
+   }
 }

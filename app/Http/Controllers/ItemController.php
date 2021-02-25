@@ -17,7 +17,7 @@ class ItemController extends Controller
         if ($keyword) {
             $query->where('name', 'like', "%{$keyword}%");
         }
-        $items = $query->paginate(2);
+        $items = $query->paginate(5);
 
 
         // $items = Item::paginate(2);

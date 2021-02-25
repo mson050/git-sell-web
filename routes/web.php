@@ -35,6 +35,8 @@ Route::get('/home/order/{id}','ClientController@viewOrder')->name('order.layout'
 Route::get('/home/{id}','ClientController@indexCategory')->name('index.category');
 
 Route::get('/home/{id}/add-to-cart/','ClientController@addtocart')->name('add-to-cart');
+Route::post('/home/detail/add-comment/','ClientController@addcomment')->name('add-comment');
+Route::post('/home/detail/load-comment/','ClientController@loadcomment')->name('loadcomment');
 Route::delete('/home/{id}/add-to-cart/','ClientController@deleteItemCart')->name('delete_item-cart');
 
 //Route pay
