@@ -87,7 +87,7 @@
     </table>
 </div>
 @endforeach
-<div  style="float: right">
-{{ $orders->appends($_GET) }}
+<div style="float: right;margin-right:50px">
+{{ $orders->appends($_GET)}}
 </div>
 @endsection

@@ -37,21 +37,21 @@
     <form action=" {{ route('auth.register-submit') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
-            <input type="text" class="form-control" name="fullname" placeholder="Full name">
+            <input type="text" class="form-control" name="fullname" placeholder="Họ tên">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
           </div>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" name="role" placeholder="Role">
-            <div class="input-group-append">
-              <div class="input-group-text">
+          {{-- <div class="input-group mb-3"> --}}
+            <input type="hidden" class="form-control" name="role" value="2" placeholder="Role">
+            {{-- <div class="input-group-append">
+              {{-- <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
+              </div> 
+            </div> --}}
+          {{-- </div> --}}
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="username" placeholder="Email">
           <div class="input-group-append">
@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
@@ -76,9 +76,9 @@
                 Remember Me
               </label>
             </div>
-          </div>
+          </div> --}}
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col-12">
             <button type="submit" class="btn btn-primary btn-block">Sign up</button>
           </div>
           <!-- /.col -->

@@ -160,14 +160,24 @@
 										<div class="col-md-3">
 											<div id="rating">
 												<div class="rating-avg">
-													<span>4.5</span>
+													<span>{{$avgRate}}</span>
 													<div class="rating-stars">
+													@for ($i = 0; $i < 5; $i++)
+														@if ($i < $avgRate)
+															<i class="fa fa-star"></i>
+														@else
+															<i class="fa fa-star-o"></i>
+														@endif
+														
+													@endfor
+													</div>
+													{{-- <div class="rating-stars">
 														<i class="fa fa-star"></i>
 														<i class="fa fa-star"></i>
 														<i class="fa fa-star"></i>
 														<i class="fa fa-star"></i>
 														<i class="fa fa-star-o"></i>
-													</div>
+													</div> --}}
 												</div>
 												<ul class="rating">
 													<li>
@@ -179,9 +189,9 @@
 															<i class="fa fa-star"></i>
 														</div>
 														<div class="rating-progress">
-															<div style="width: 80%;"></div>
+															<div style="width: {{$sumRate5*100/$totalRate}}%;"></div>
 														</div>
-														<span class="sum">3</span>
+														<span class="sum">{{$sumRate5}}</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -192,9 +202,9 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div style="width: 60%;"></div>
+															<div style="width: {{$sumRate4*100/$totalRate}}%;"></div>
 														</div>
-														<span class="sum">2</span>
+														<span class="sum">{{$sumRate4}}</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -205,9 +215,9 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div></div>
+															<div style="width: {{$sumRate3*100/$totalRate}}%;"></div>
 														</div>
-														<span class="sum">0</span>
+														<span class="sum">{{$sumRate3}}</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -218,9 +228,9 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div></div>
+															<div style="width: {{$sumRate2*100/$totalRate}}%;"></div>
 														</div>
-														<span class="sum">0</span>
+														<span class="sum">{{$sumRate2}}</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -231,9 +241,9 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div></div>
+															<div style="width: {{$sumRate1*100/$totalRate}}%;"></div>
 														</div>
-														<span class="sum">0</span>
+														<span class="sum">{{$sumRate1}}</span>
 													</li>
 												</ul>
 											</div>
@@ -322,7 +332,7 @@
 											<div id="review-form">
 												<form action="#" class="review-form">
 													@csrf
-													<input  type="hidden" class="user_comment_id" name="user" value="{{Auth::user()->id}}" placeholder="">
+													<input  type="hidden" class="user_comment_id" name="user" value="{{ empty(Auth::user()) ? '':Auth::user()->id}}" placeholder="">
 													<input  type="hidden" class="item_comment_id" name="item" value="{{$item->id}}" placeholder="">
 													{{-- <input class="input" type="email" placeholder="Your Email"> --}}
 													<textarea class="input comment-content" name="review" placeholder="Your Review"></textarea>
@@ -340,7 +350,7 @@
 												</form>
 											</div>
 										</div>
-										<!-- /Review Form -->
+										<!-- /Review Form --> 
 									</div>
 								</div>
 								<!-- /tab3  -->

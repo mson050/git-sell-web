@@ -85,8 +85,17 @@ class ClientController extends Controller
         $category_query = Category::query();
         $categories = $category_query->paginate(5);
         $item = Item::find($id);
+        $sumRate1 = Comment::query()->where('item_id','=',"{$id}")->where('rate','=',1)->count();
+        $sumRate2 = Comment::query()->where('item_id','=',"{$id}")->where('rate','=',2)->count();
+        $sumRate3 = Comment::query()->where('item_id','=',"{$id}")->where('rate','=',3)->count();
+        $sumRate4 = Comment::query()->where('item_id','=',"{$id}")->where('rate','=',4)->count();
+        $sumRate5 = Comment::query()->where('item_id','=',"{$id}")->where('rate','=',5)->count();
+        $totalRate = Comment::query()->where('item_id','=',"{$id}")->count();
+        $avgRate = Comment::query()->where('item_id','=',"{$id}")->avg('rate');
+        $avgRate = round($avgRate);
         $related_items = Item::query()->where('category_id','=',"{$item->category_id}")->get();
-        return view('client.page.detail',compact('item','categories','related_items'));
+        return view('client.page.detail',compact('item','categories','related_items','sumRate1',
+        'sumRate2','sumRate3','sumRate4','sumRate5','totalRate','avgRate'));
 
     }
     public function addtocart($id, Request $request)
@@ -170,11 +179,13 @@ class ClientController extends Controller
         $user = $request->input('user_id');
         $item = $request->input('item_id');
         $review = $request->input('comment_content');
+        $rating = $request->input('rating');
 
         $comment = new Comment;
         $comment->user_id = $user;
         $comment->item_id = $item;
         $comment->comment = $review;
+        $comment->rate = $rating;
         $comment->save();
 
    }

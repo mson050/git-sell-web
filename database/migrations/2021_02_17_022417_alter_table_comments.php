@@ -14,7 +14,7 @@ class AlterTableComments extends Migration
     public function up()
     {
         Schema::table('comments', function ($table) {
-            
+            $table->integer('rate');
         });
     }
 
@@ -26,7 +26,7 @@ class AlterTableComments extends Migration
     public function down()
     {
         Schema::table('comments', function ($table) {
-
+            $table->dropColumn('rate');
         });
     }
 }

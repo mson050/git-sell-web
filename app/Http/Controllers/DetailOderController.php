@@ -22,7 +22,7 @@ class DetailOderController extends Controller
         foreach ($cart as $product) {
             $item = Item::find($product['id']);
             $item->number += $product['qty'];
-            $item->quantity -= $item->number;
+            $item->quantity -= $product['qty'];
             $item->save();
         }
         session()->forget(['cart','cartInfo']);

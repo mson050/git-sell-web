@@ -361,21 +361,26 @@
 				}
 				//comment ajax
 			$('.sent-comment').click(function () {
+				@if(Auth::user())
 				var item_id = $('.item_comment_id').val();
 				var user_id = $('.user_comment_id').val();
 				var comment_content = $('.comment-content').val();
+				var rating = jQuery("input[name=rating]:radio:checked").val();
 				var _token = $('input[name="_token"]').val();
 				$.ajax({
 					type: "POST",
 					url: "/home/detail/add-comment",
-					data: {item_id:item_id,user_id:user_id,comment_content:comment_content,_token:_token},
+					data: {item_id:item_id,user_id:user_id,comment_content:comment_content,rating:rating,_token:_token},
 					success: function (response) {
 						swal('Comment thành công');
 						loadcomment();
 					}
 				});
+				@else
+					swal("Đăng nhập để thêm bình luận")
+				@endif
 			});
-			})
+			}) 
 		</script>
 
 		<script type="text/javascript">
